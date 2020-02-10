@@ -1,6 +1,8 @@
-export interface Question {
-    senderName: string;
-    senderEmail: string;
-    category: string;
-    details: string;
+export class Question {
+    constructor(
+        public senderName: string,
+        public senderEmail: string,
+        public category: string,
+        public details: string
+    ) { }
 }
