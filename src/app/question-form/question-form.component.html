@@ -54,7 +54,18 @@
     Check form updates:
     <pre>{{ question | json }} <br /></pre>
     <pre>{{ questionForm.value | json }}</pre>
-    
-    <button type="submit" class="btn btn-success">Submit</button>
+
+    <div class="alert alert-danger" role="alert" *ngIf="serverErrorMessage">
+      {{ serverErrorMessage }}
+    </div>
+    <div class="row">
+      <div class="col-1">
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+      <div class="col-1">
+        <button type="button" class="btn btn-light" (click)="questionForm.reset()">Clear</button>
+        <!-- <button type="reset" class="btn btn-light">Clear</button> -->
+      </div>
+    </div>
   </form>
 </div>
