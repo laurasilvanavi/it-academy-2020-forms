@@ -8,6 +8,7 @@
         class="form-control"
         id="name"
         required
+        maxlength="30"
         [(ngModel)]="question.senderName"
         name="senderName"
       />
@@ -19,6 +20,9 @@
         type="email"
         class="form-control"
         id="email"
+        required
+        maxlength="30"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
         placeholder="name@example.com"
         [(ngModel)]="question.senderEmail"
         name="senderEmail"
@@ -45,26 +49,30 @@
       <textarea
         class="form-control"
         id="details"
+        required
+        minlength="10"
+        maxlength="30"
         rows="5"
         [(ngModel)]="question.details"
-        name="wrongName"
+        name="details"
       ></textarea>
     </div>
-
-    Check form updates:
-    <pre>{{ question | json }} <br /></pre>
-    <pre>{{ questionForm.value | json }}</pre>
 
     <div class="alert alert-danger" role="alert" *ngIf="serverErrorMessage">
       {{ serverErrorMessage }}
     </div>
     <div class="row">
       <div class="col-1">
-        <button type="submit" class="btn btn-success">Submit</button>
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="!questionForm.valid"
+        >
+          Submit
+        </button>
       </div>
       <div class="col-1">
-        <button type="button" class="btn btn-light" (click)="questionForm.reset()">Clear</button>
-        <!-- <button type="reset" class="btn btn-light">Clear</button> -->
+        <button type="reset" class="btn btn-light">Clear</button>
       </div>
     </div>
   </form>
