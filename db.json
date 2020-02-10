@@ -1,5 +1,5 @@
 {
-  "questions": [
+  "questionsError": [
     {
       "id": 11111,
       "senderName": "Sebastian",
@@ -42,5 +42,6 @@
       "details": "",
       "id": 11118
     }
-  ]
+  ],
+  "questionCategories": ["Shipping", "Refund", "Membership", "Other"]
 }

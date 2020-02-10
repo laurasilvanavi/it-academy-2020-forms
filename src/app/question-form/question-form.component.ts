@@ -12,23 +12,28 @@ export class QuestionFormComponent implements OnInit {
 
   categories: string[];
   question: Question;
-  questions: Question[];
   serverErrorMessage: string;
-  questionCategories: string[];
 
   constructor(private questionService: QuestionService) { }
 
   ngOnInit() {
-    this.questions = [];
-    this.categories = ['Shipping', 'Refund', 'Membership', 'Other'];
+    this.categories = [];
     this.question = new Question('', '', '', '');
+    this.questionService.getQuestionCategories().subscribe(data => {
+      this.categories = data;
+      this.serverErrorMessage = '';
+    },
+      error => this.serverErrorMessage = error
+    );
   }
 
   onSubmit() {
-    this.questions.push(this.question); // local list
-
-    this.questionService.addQuestion(this.question).subscribe(() =>
-      this.question = new Question('', '', '', ''));
+    this.questionService.addQuestion(this.question).subscribe(() => {
+      this.question = new Question('', '', '', '');
+      this.serverErrorMessage = '';
+    },
+      error => this.serverErrorMessage = error
+    );
   }
 
 }
