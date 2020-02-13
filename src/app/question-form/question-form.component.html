@@ -1,9 +1,13 @@
 <div class="container">
   <h2 class="text-center">Drop us your question now!</h2>
-  <form #questionForm="ngForm" (ngSubmit)="onSubmit(); questionForm.reset()">
+  <!-- <form #questionForm="ngForm" (ngSubmit)="onSubmit(); questionForm.reset()"> -->
+  <form
+    [formGroup]="questionForm"
+    (ngSubmit)="onSubmit(); questionForm.reset()"
+  >
     <div class="form-group">
       <label for="name">Your name</label>
-      <input
+      <!-- <input
         type="text"
         class="form-control"
         id="name"
@@ -12,12 +16,27 @@
         maxlength="30"
         [(ngModel)]="question.senderName"
         name="senderName"
+      /> -->
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        formControlName="senderName"
       />
-      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+      <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
         Name is required
+      </div> -->
+      <div
+        [hidden]="questionForm.controls.senderName.valid || senderName.pristine"
+        class="alert alert-danger"
+      >
+        <div *ngIf="senderName.errors?.required">
+          Name is required
+        </div>
+        <div *ngIf="senderName.errors?.forbiddenName">
+          Laura name is forbidden to use
+        </div>
       </div>
-      <br />
-      Is name field valid: {{ name.valid }}
     </div>
 
     <div class="form-group">
@@ -26,19 +45,20 @@
         type="email"
         class="form-control"
         id="email"
-        #email="ngModel"
-        required
-        maxlength="30"
-        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
         placeholder="name@example.com"
-        [(ngModel)]="question.senderEmail"
-        name="senderEmail"
+        formControlName="senderEmail"
       />
-      <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-        <div *ngIf="email.errors?.required">
+
+      <div
+        [hidden]="senderEmail.valid || senderEmail.pristine"
+        class="alert alert-danger"
+      >
+        <div *ngIf="senderEmail.errors?.required">
           Email is required
         </div>
-        <div *ngIf="email.errors?.pattern">Email is incorrect</div>
+        <div *ngIf="senderEmail.errors?.pattern">
+          Email is incorrect
+        </div>
       </div>
     </div>
 
@@ -47,10 +67,7 @@
       <select
         class="form-control"
         id="category"
-        #category="ngModel"
-        required
-        [(ngModel)]="question.category"
-        name="category"
+        formControlName="category"
       >
         <option *ngFor="let category of categories" [value]="category">
           {{ category }}
@@ -70,13 +87,8 @@
       <textarea
         class="form-control"
         id="details"
-        #details="ngModel"
-        required
-        minlength="10"
-        maxlength="30"
         rows="5"
-        [(ngModel)]="question.details"
-        name="details"
+        formControlName="details"
       ></textarea>
       <div
         [hidden]="details.valid || details.pristine"
