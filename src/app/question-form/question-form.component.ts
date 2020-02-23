@@ -56,7 +56,7 @@ export class QuestionFormComponent implements OnInit {
 
   onSubmit() {
     this.question = this.questionForm.value;
-    this.questionService.addQuestion(this.question).subscribe(() => {
+    this.questionService.updateQuestion(11115, this.question).subscribe(() => {
       this.question = new Question('', '', '', '');
       this.serverErrorMessage = '';
     },
